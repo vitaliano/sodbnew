@@ -1,0 +1,11 @@
+C:\Users\React\Desktop\SODB_NEW\bin\Release\SODB_NEW.exe.config
+C:\Users\React\Desktop\SODB_NEW\bin\Release\SODB_NEW.exe
+C:\Users\React\Desktop\SODB_NEW\bin\Release\SODB_NEW.pdb
+C:\Users\React\Desktop\SODB_NEW\obj\Release\SODB_NEW.exe
+C:\Users\React\Desktop\SODB_NEW\obj\Release\SODB_NEW.pdb
+C:\Users\Kleber_Net\Desktop\new sistema\SODB_NEW\bin\Release\SODB_NEW.exe.config
+C:\Users\Kleber_Net\Desktop\new sistema\SODB_NEW\bin\Release\SODB_NEW.exe
+C:\Users\Kleber_Net\Desktop\new sistema\SODB_NEW\bin\Release\SODB_NEW.pdb
+C:\Users\Kleber_Net\Desktop\new sistema\SODB_NEW\obj\Release\SODB_NEW.csproj.CoreCompileInputs.cache
+C:\Users\Kleber_Net\Desktop\new sistema\SODB_NEW\obj\Release\SODB_NEW.exe
+C:\Users\Kleber_Net\Desktop\new sistema\SODB_NEW\obj\Release\SODB_NEW.pdb

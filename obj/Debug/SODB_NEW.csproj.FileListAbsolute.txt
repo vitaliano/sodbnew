@@ -1,0 +1,32 @@
+C:\Users\DELL\Desktop\VS\SODB_NEW\bin\Debug\SODB_NEW.exe.config
+C:\Users\DELL\Desktop\VS\SODB_NEW\obj\Debug\SODB_NEW.csprojResolveAssemblyReference.cache
+C:\Users\DELL\Desktop\VS\SODB_NEW\bin\Debug\SODB_NEW.exe
+C:\Users\DELL\Desktop\VS\SODB_NEW\bin\Debug\SODB_NEW.pdb
+C:\Users\DELL\Desktop\VS\SODB_NEW\obj\Debug\SODB_NEW.exe
+C:\Users\DELL\Desktop\VS\SODB_NEW\obj\Debug\SODB_NEW.pdb
+C:\Users\klebe\Desktop\SODB_NEW\bin\Debug\SODB_NEW.exe.config
+C:\Users\klebe\Desktop\SODB_NEW\obj\Debug\SODB_NEW.exe
+C:\Users\klebe\Desktop\SODB_NEW\obj\Debug\SODB_NEW.pdb
+C:\Users\React\Desktop\SODB_NEW\bin\Debug\SODB_NEW.exe.config
+C:\Users\React\Desktop\SODB_NEW\bin\Debug\SODB_NEW.exe
+C:\Users\React\Desktop\SODB_NEW\bin\Debug\SODB_NEW.pdb
+C:\Users\React\Desktop\SODB_NEW\obj\Debug\SODB_NEW.csprojResolveAssemblyReference.cache
+C:\Users\React\Desktop\SODB_NEW\obj\Debug\SODB_NEW.exe
+C:\Users\React\Desktop\SODB_NEW\obj\Debug\SODB_NEW.pdb
+C:\Users\React\Desktop\sistemas 3rcorp\SODB_NEW\bin\Debug\SODB_NEW.exe.config
+C:\Users\React\Desktop\sistemas 3rcorp\SODB_NEW\obj\Debug\SODB_NEW.exe
+C:\Users\React\Desktop\sistemas 3rcorp\SODB_NEW\obj\Debug\SODB_NEW.pdb
+C:\Users\Kleber_Net\Desktop\new sistema\SODB_NEW\bin\Debug\SODB_NEW.exe.config
+C:\Users\Kleber_Net\Desktop\new sistema\SODB_NEW\bin\Debug\SODB_NEW.exe
+C:\Users\Kleber_Net\Desktop\new sistema\SODB_NEW\bin\Debug\SODB_NEW.pdb
+C:\Users\Kleber_Net\Desktop\new sistema\SODB_NEW\obj\Debug\SODB_NEW.csprojAssemblyReference.cache
+C:\Users\Kleber_Net\Desktop\new sistema\SODB_NEW\obj\Debug\SODB_NEW.csproj.CoreCompileInputs.cache
+C:\Users\Kleber_Net\Desktop\new sistema\SODB_NEW\obj\Debug\SODB_NEW.exe
+C:\Users\Kleber_Net\Desktop\new sistema\SODB_NEW\obj\Debug\SODB_NEW.pdb
+C:\Users\fabio\OneDrive\Área de Trabalho\SODB_NEW\bin\Debug\SODB_NEW.exe.config
+C:\Users\fabio\OneDrive\Área de Trabalho\SODB_NEW\bin\Debug\SODB_NEW.exe
+C:\Users\fabio\OneDrive\Área de Trabalho\SODB_NEW\bin\Debug\SODB_NEW.pdb
+C:\Users\fabio\OneDrive\Área de Trabalho\SODB_NEW\obj\Debug\SODB_NEW.csprojAssemblyReference.cache
+C:\Users\fabio\OneDrive\Área de Trabalho\SODB_NEW\obj\Debug\SODB_NEW.csproj.CoreCompileInputs.cache
+C:\Users\fabio\OneDrive\Área de Trabalho\SODB_NEW\obj\Debug\SODB_NEW.exe
+C:\Users\fabio\OneDrive\Área de Trabalho\SODB_NEW\obj\Debug\SODB_NEW.pdb

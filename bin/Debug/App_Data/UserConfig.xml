@@ -1,0 +1,18 @@
+<configuration>
+  <connectionStrings>
+    <connectionString name="LocalConnection" providerName="System.Data.SqlClient" connectionString="Data Source=DESKTOP-MOMTD7M\SQLEXPRESS;Initial Catalog=Integrated3R;Integrated Security=SSPI;" />
+  </connectionStrings>
+  <user name="3rsynch" pass="net3rcorp" />
+  <client name="3rcorp" />
+  <location name="teste" />
+  <remoteServer uri="http://localhost:1493/ReportToClient.ashx" />
+  <lastDateTransmitted date="2018-04-30 15" />
+  <user name="SYNCHDATA" pass="net3rcorp" />
+  <cameras_list>
+	<door old_computer_name="CONTAGEMDEFLUXO" old_door_name="Lado Direito Getulio" old_channel="0" old_shop_name="Jaragua do Sul Park Shopping" entrance="Lado Direito Getulio" door="Lado Direito Getulio" />
+    <door old_computer_name="CONTAGEMDEFLUXO" old_door_name="Lado Esquerdo Getulio" old_channel="2" old_shop_name="Jaragua do Sul Park Shopping" entrance="Lado Esquerdo Getulio" door="Lado Esquerdo Getulio" />
+    <door old_computer_name="CONTAGEMDEFLUXO" old_door_name="Porta Automatica G3" old_channel="3" old_shop_name="Jaragua do Sul Park Shopping" entrance="Porta Automatica G3" door="Porta Automatica G3" />
+    <door old_computer_name="CONTAGEMDEFLUXO" old_door_name="Sub Solo" old_channel="9" old_shop_name="Jaragua do Sul Park Shopping" entrance="Sub Solo" door="Sub Solo" />
+    <door old_computer_name="CONTAGEMDEFLUXO" old_door_name="Entrada Farmacia" old_channel="10" old_shop_name="Jaragua do Sul Park Shopping" entrance="Entrada Farmacia" door="Entrada Farmacia" />
+  </cameras_list>
+</configuration>

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  arquivo que contem as configurações deste servidor para o sincronismo
+-->
+
+<configuration>
+<connectionStrings>
+<connectionString name="LocalConnection" providerName="System.Data.SqlClient" connectionString="Data Source=DESKTOP-MOMTD7M\SQLEXPRESS;Initial Catalog=contafluxo;Integrated Security=SSPI;Max Pool Size=250;Connection Timeout=300;Pooling=false"/>
+</connectionStrings>
+<user name="jaragua@3rcorp.com.br" pass="j@r@gu@"/>
+<client name="Jaragua do Sul Park Shopping"/>
+<location name="Jaragua do Sul"/>
+<remoteServer_old uri="http://localhost:3117/ReportToClient.ashx"/>
+<remoteServer uri="https://nodehub.azurewebsites.net/ReportToClient.ashx"/>
+<lastDateTransmitted date="2024-07-01 10:01:59"/>
+<operationHours timezone_diff="0" counting_hour_sunday="10" counting_hour_sunday_qtd="12" counting_hour_monday="10" counting_hour_monday_qtd="12" counting_hour_tuesday="10" counting_hour_tuesday_qtd="12" counting_hour_wednesday="10" counting_hour_wednesday_qtd="12" counting_hour_thursday="10" counting_hour_thursday_qtd="12" counting_hour_friday="10" counting_hour_friday_qtd="12" counting_hour_saturday="10" counting_hour_saturday_qtd="12" counting_hour_holiday="10" counting_hour_holiday_qtd="12"/>
+-
+<holidays_list>
+<holiday year="0000" month="01" day="01"/>
+<holiday year="0000" month="04" day="21"/>
+<holiday year="0000" month="05" day="01"/>
+<holiday year="0000" month="11" day="15"/>
+<holiday year="0000" month="12" day="25"/>
+</holidays_list>
+-
+<cameras_list>
+<door door="Porta Automatica G3" entrance="Porta Automatica G3" old_shop_name="Jaragua do Sul Park Shopping" old_channel="3" old_door_name="Porta Automatica G3" old_computer_name="DESKTOP-OK62QH1"/>
+<door door="Hall Elev G6" entrance="Hall Elev G6" old_shop_name="Jaragua do Sul Park Shopping" old_channel="6" old_door_name="Hall Elev G6" old_computer_name="DESKTOP-OK62QH1"/>
+<door door="Hall Elev G5" entrance="Hall Elev G5" old_shop_name="Jaragua do Sul Park Shopping" old_channel="7" old_door_name="Hall Elev G5" old_computer_name="DESKTOP-OK62QH1"/>
+<door door="Sub Solo" entrance="Sub Solo" old_shop_name="Jaragua do Sul Park Shopping" old_channel="9" old_door_name="Sub Solo" old_computer_name="DESKTOP-OK62QH1"/>
+<door door="Entrada Farmacia" entrance="Entrada Farmacia" old_shop_name="Jaragua do Sul Park Shopping" old_channel="10" old_door_name="Entrada Farmacia" old_computer_name="DESKTOP-OK62QH1"/>
+<door door="Hall Elev G4" entrance="Hall Elev G4" old_shop_name="Jaragua do Sul Park Shopping" old_channel="11" old_door_name="Hall Elev G4" old_computer_name="DESKTOP-OK62QH1"/>
+</cameras_list>
+</configuration>

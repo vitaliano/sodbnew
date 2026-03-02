@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  arquivo que contem as configurações deste servidor para o sincronismo
+-->
+<configuration>
+  <connectionStrings>
+	<connectionString  name= "LocalConnection" providerName="System.Data.SqlClient"
+         connectionString="Data Source=CONTAGEMDEFLUXO;Initial Catalog=contafluxo;Integrated Security=SSPI;" />
+	</connectionStrings>
+  <user name="3rsynch" pass="net3rcorp" />
+  <client name="3rcorp" />
+  <location name="teste" />
+  <remoteServer uri="http://localhost:3117/ReportToClient.ashx" />
+  <lastDateTransmitted date="1000-01-01 00:00:00" />
+  <user name="SYNCHDATA" pass="net3rcorp" />
+  <cameras_list></cameras_list>
+</configuration>
