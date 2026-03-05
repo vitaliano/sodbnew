@@ -30,3 +30,10 @@ C:\Users\fabio\OneDrive\Área de Trabalho\SODB_NEW\obj\Debug\SODB_NEW.csprojAsse
 C:\Users\fabio\OneDrive\Área de Trabalho\SODB_NEW\obj\Debug\SODB_NEW.csproj.CoreCompileInputs.cache
 C:\Users\fabio\OneDrive\Área de Trabalho\SODB_NEW\obj\Debug\SODB_NEW.exe
 C:\Users\fabio\OneDrive\Área de Trabalho\SODB_NEW\obj\Debug\SODB_NEW.pdb
+C:\Users\fabio\OneDrive\Área de Trabalho\LINKS\AllOfAzure\AllOfLocalServer\Teste Jaragua\SODB_NEW\obj\Debug\SODB_NEW.csproj.AssemblyReference.cache
+C:\Users\fabio\OneDrive\Área de Trabalho\LINKS\AllOfAzure\AllOfLocalServer\Teste Jaragua\SODB_NEW\obj\Debug\SODB_NEW.csproj.CoreCompileInputs.cache
+C:\Users\fabio\OneDrive\Área de Trabalho\LINKS\AllOfAzure\AllOfLocalServer\Teste Jaragua\SODB_NEW\obj\Debug\SODB_NEW.exe
+C:\Users\fabio\OneDrive\Área de Trabalho\LINKS\AllOfAzure\AllOfLocalServer\Teste Jaragua\SODB_NEW\obj\Debug\SODB_NEW.pdb
+C:\Users\fabio\OneDrive\Área de Trabalho\LINKS\AllOfAzure\AllOfLocalServer\Teste Jaragua\SODB_NEW\bin\Debug\SODB_NEW.exe.config
+C:\Users\fabio\OneDrive\Área de Trabalho\LINKS\AllOfAzure\AllOfLocalServer\Teste Jaragua\SODB_NEW\bin\Debug\SODB_NEW.exe
+C:\Users\fabio\OneDrive\Área de Trabalho\LINKS\AllOfAzure\AllOfLocalServer\Teste Jaragua\SODB_NEW\bin\Debug\SODB_NEW.pdb

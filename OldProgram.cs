@@ -12,46 +12,33 @@ using System.Collections.Specialized;
 using System.Xml;
 using System.Diagnostics;
 using System.Threading;
+using System.Timers;
 
 namespace SODB_NEW
 {
-
-    public enum server_status_new { off, no_data, with_data, no_auth };
-    class Program
+    public enum server_status { off, no_data, with_data, no_auth };
+    class OldProgram
     {
-        static DataView getSelection(SqlConnection conn, string query)
+        private static System.Timers.Timer aTimer;
+        //TODO 
+        // por no agendador para rodar a cada 10 minutos
+        // interromper se estiver rodando ha mais de 3 horas
+        private static void SetTimer()
         {
-            DataView dv = new DataView();
-            DataSet ds = new DataSet();
-            try
-            {
-                SqlDataAdapter userAdapter = new SqlDataAdapter(query, conn);
-                userAdapter.Fill(ds, "all_users");
-                dv = ds.Tables[0].DefaultView;
-
-                if (dv.Count == 0)
-                    Console.WriteLine("No Selection");
-                return dv;
-            }
-            catch (Exception ex)
-            {
-                logMessage("Exception in getSelection : " + ex.Message);
-                return null;
-            }
+            // Create a timer with a two second interval.
+            aTimer = new System.Timers.Timer(10000);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
         }
 
-        static void logMessage(string message)
+        private static void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            // string serverPathTxt = AppDomain.CurrentDomain.BaseDirectory + "App_Data\\TransmissionEvents.csv";
-            string serverPathTxt = AppDomain.CurrentDomain.BaseDirectory + "App_Data\\Transmissions.csv";
-            string hourBegin = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(serverPathTxt, true))
-            {
-                file.WriteLine(hourBegin + "-------------------------" + message);
-            }
+            Console.WriteLine("The Elapsed event was raised at {0:HH:mm:ss.fff}",
+                              e.SignalTime);
         }
-
-
+        
         static string getXMLFileString(string pathXMLFile)
         {
             string myResponse = "";
@@ -74,8 +61,127 @@ namespace SODB_NEW
             }
             return myResponse;
         }
+        static string getDateToTransmit(SqlConnection conn ,string lastTransmission)
+        {
+            // obtem a próxima data a transmitir
+            // é a primeira data maior que dateStr
+            string strSQL = @"select top 1 Convert(nvarchar(13),[created_at],121) as dateStr 
+                            from totals_shop where created_at > CONVERT(DATETIME,'" + lastTransmission + ":59:59.999',121)";
+            try
+            {
+                DataView dv = getSelection(conn, strSQL);
+                if (dv != null)
+                    if (dv.Count == 1)
+                        return dv[0]["datestr"].ToString();
+                    else
+                        return "";
+                else
+                    return "";
+            }
+            catch (Exception ex)
+            {
+                logMessage("Exception in getDateToTransmit : " + ex.Message);
+                return "";
+            }
+        }
+        static DataView getSumsForTheHourOneLinePerCamera(SqlConnection conn,string dateToTransmit)
+        {
+            string dt1 = dateToTransmit + ":00:00";
+            string dt2 = dateToTransmit + ":59:59.999";
 
-        static int findATagNameWithAttr(XmlDocument doc, string tagName, string attrs_names, string attrs_values)
+            string strSQL =
+@"SELECT computer_name, channel, shop_name, shop_door,
+SUM(total_inside) AS ins,SUM(total_outside) AS outs FROM
+(SELECT computer_name, channel, shop_name, shop_door, total_inside,total_outside
+FROM totals_shop WHERE  created_at BETWEEN CONVERT(DATETIME,'@dt1',121) AND CONVERT(DATETIME,'@dt2',121) ) A
+GROUP BY computer_name,channel, shop_name,shop_door";
+            strSQL=strSQL.Replace("@dt1", dt1);
+            strSQL=strSQL.Replace("@dt2", dt2);
+            DataView dv = getSelection(conn, strSQL);
+            return dv;
+        }
+        static DataView getSelection(SqlConnection conn, string query)
+        {
+            DataView dv = new DataView();
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlDataAdapter userAdapter = new SqlDataAdapter(query, conn);
+                userAdapter.Fill(ds, "all_users");
+                dv = ds.Tables[0].DefaultView;
+
+                if (dv.Count == 0)
+                    Console.WriteLine("No Selection");
+                return dv;
+            }
+            catch (Exception ex)
+            {
+                logMessage("Exception in getSelection : " + ex.Message);
+                return null;
+            }
+        }
+        private static string getXMLForTheHourOneLinePerCamera(string created_at,DataView dv, XmlDocument docConfig)
+        {
+            string thisTransmission = "";
+            string door = "";
+            string entrance = "";
+            XmlDocument docDest = new XmlDocument();
+            docDest.LoadXml("<catalog><flow_list></flow_list></catalog>");
+
+            XmlNode fatherDest = docDest.GetElementsByTagName("flow_list")[0];
+            int ch = 0;
+            foreach (DataRowView rowX in dv)
+            {
+                string cn = rowX["computer_name"].ToString();
+                string shn = rowX["shop_name"].ToString();
+                string shd = rowX["shop_door"].ToString();
+                int.TryParse(rowX["channel"].ToString(), out ch);
+                mapDoor(docConfig,cn,shn,shd,ch,ref door,ref entrance);
+                if (door == "")
+                    continue;
+                XmlNode nDest = docDest.CreateNode(XmlNodeType.Element, "this_transmission", "");
+
+                XmlNode attr1 = docDest.CreateNode(XmlNodeType.Attribute, "door", "");
+                attr1.Value = door;
+                nDest.Attributes.SetNamedItem(attr1);
+
+                XmlNode attr2 = docDest.CreateNode(XmlNodeType.Attribute, "entrance", "");
+                attr2.Value = entrance;
+                nDest.Attributes.SetNamedItem(attr2);
+
+                XmlNode attr3 = docDest.CreateNode(XmlNodeType.Attribute, "created_at", "");
+                attr3.Value = created_at+":59:59";
+                nDest.Attributes.SetNamedItem(attr3);
+
+                XmlNode attr4 = docDest.CreateNode(XmlNodeType.Attribute, "total_inside", "");
+                attr4.Value = rowX["ins"].ToString().Trim();
+                nDest.Attributes.SetNamedItem(attr4);
+
+                XmlNode attr5 = docDest.CreateNode(XmlNodeType.Attribute, "total_outside", "");
+                attr5.Value = rowX["outs"].ToString().Trim();
+                nDest.Attributes.SetNamedItem(attr5);
+
+                fatherDest.AppendChild(nDest);
+            }
+            thisTransmission = docDest.OuterXml;
+            return thisTransmission;
+        }
+        static void mapDoor(XmlDocument doc,string cn,string shn,string shd, int ch,
+                            ref string door,ref string entrance)
+        {
+            string chs = ch.ToString().Trim();
+            string attrList = "old_shop_name,old_computer_name,old_door_name,old_channel";
+            string searchedStr = shn + "," + cn + "," + shd + "," + chs;
+            int ret = findATagNameWithAttr(doc, "door", attrList, searchedStr);
+            if (ret == -1)
+                door = "";
+            else
+            {
+                door = doc.GetElementsByTagName("door")[ret].Attributes["door"].Value;
+                entrance = doc.GetElementsByTagName("door")[ret].Attributes["entrance"].Value;
+            }
+        }
+        static int findATagNameWithAttr(XmlDocument doc, string tagName,string attrs_names,string attrs_values)
         {
             string[] attr_name = attrs_names.Split(',');
             string[] attr_value = attrs_values.Split(',');
@@ -100,105 +206,7 @@ namespace SODB_NEW
             }
             return -1;
         }
-
-        static void mapDoor(XmlDocument doc, string cn, string shn, string shd, int ch,
-                            ref string door, ref string entrance)
-        {
-            string chs = ch.ToString().Trim();
-            string attrList = "old_shop_name,old_computer_name,old_door_name,old_channel";
-            string searchedStr = shn + "," + cn + "," + shd + "," + chs;
-            int ret = findATagNameWithAttr(doc, "door", attrList, searchedStr);
-            if (ret == -1)
-                door = "";
-            else
-            {
-                door = doc.GetElementsByTagName("door")[ret].Attributes["door"].Value;
-                entrance = doc.GetElementsByTagName("door")[ret].Attributes["entrance"].Value;
-            }
-        }
-
-        private static DataView getSumsForTheHourOneLinePerCamera(SqlConnection conn)
-        {
-            string strSQL =
-@"SELECT MAX([id]) as maxId
-      ,[shop_state]
-      ,[shop_city]
-      ,[shop_name]
-      ,[shop_door]
-      ,[computer_name]
-      ,[channel]
-      ,CONVERT(VARCHAR(13), created_at, 120) AS FormattedDate
-	  ,SUM(total_inside) AS ins
-	  ,SUM(total_outside) AS outs
-  FROM [dbo].[totals_shop]
-  WHERE ISNULL(transmitted,0)=0  AND (total_inside>0 OR total_outside >0)
-  GROUP BY 
-      [shop_state]
-      ,[shop_city]
-      ,[shop_name]
-      ,[shop_door]
-      ,[computer_name]
-      ,[channel]
-	  ,CONVERT(VARCHAR(13), created_at, 120)";
-            DataView dv = getSelection(conn, strSQL);
-            return dv;
-        }
-
-        private static string getXMLForTheHourOneLinePerCameraPerHour( DataView dv, XmlDocument docConfig, ref int maxId)
-        {
-
-            string thisTransmission = "";
-            XmlDocument docDest = new XmlDocument();
-            docDest.LoadXml("<catalog><flow_list></flow_list></catalog>");
-
-            XmlNode fatherDest = docDest.GetElementsByTagName("flow_list")[0];
-            int ch = 0;
-            int veryMaxId = 0;
-            foreach (DataRowView rowX in dv)
-            {
-                int thisMaxId = Convert.ToInt32(rowX["maxId"]);
-                if (thisMaxId > veryMaxId)
-                    veryMaxId = thisMaxId;
-                string door = "";
-                string entrance = "";
-                string cn = rowX["computer_name"].ToString();
-                string shn = rowX["shop_name"].ToString();
-                string shd = rowX["shop_door"].ToString();
-                string created_at= rowX["FormattedDate"].ToString();
-                int.TryParse(rowX["channel"].ToString(), out ch);
-                mapDoor(docConfig, cn, shn, shd, ch, ref door, ref entrance);
-                if (door == "")
-                    continue;
-                XmlNode nDest = docDest.CreateNode(XmlNodeType.Element, "this_transmission", "");
-
-                XmlNode attr1 = docDest.CreateNode(XmlNodeType.Attribute, "door", "");
-                attr1.Value = door;
-                nDest.Attributes.SetNamedItem(attr1);
-
-                XmlNode attr2 = docDest.CreateNode(XmlNodeType.Attribute, "entrance", "");
-                attr2.Value = entrance;
-                nDest.Attributes.SetNamedItem(attr2);
-
-                XmlNode attr3 = docDest.CreateNode(XmlNodeType.Attribute, "created_at", "");
-                attr3.Value = created_at + ":59:59";
-                nDest.Attributes.SetNamedItem(attr3);
-
-                XmlNode attr4 = docDest.CreateNode(XmlNodeType.Attribute, "total_inside", "");
-                attr4.Value = rowX["ins"].ToString().Trim();
-                nDest.Attributes.SetNamedItem(attr4);
-
-                XmlNode attr5 = docDest.CreateNode(XmlNodeType.Attribute, "total_outside", "");
-                attr5.Value = rowX["outs"].ToString().Trim();
-                nDest.Attributes.SetNamedItem(attr5);
-
-                fatherDest.AppendChild(nDest);
-            }
-            thisTransmission = docDest.OuterXml;
-            maxId = veryMaxId;
-            return thisTransmission;
-        }
-
-        private static int sendTransmission(string uri, string username,
+        public static int sendTransmission(string uri, string username,
                            string pw, string client,
                            string location, string transmission)
         {
@@ -240,7 +248,6 @@ namespace SODB_NEW
                 return (int)server_status.off;
             }
         }
-
         public static void logTransmissions(string transmission)
         {
             string serverPathTxt = AppDomain.CurrentDomain.BaseDirectory + "App_Data\\Transmissions.csv";
@@ -258,7 +265,7 @@ namespace SODB_NEW
                         attrs["door"].Value.Trim() + ";" +
                         attrs["total_inside"].Value.Trim() + ";" +
                         attrs["total_outside"].Value.Trim();
-                Console.Write("\n" + line);
+                Console.Write("\n"+ line);
                 /*
                 using (StreamWriter file = new StreamWriter(serverPathTxt, true))
                 {
@@ -268,21 +275,25 @@ namespace SODB_NEW
             }
         }
 
-        public static void markTransmittedRecords(SqlConnection conn, int maxId)
+        static void logMessage(string message)
         {
-            using (var cmd = new SqlCommand(@"UPDATE [dbo].[totals_shop] SET transmitted=1 " +
-                "WHERE ISNULL(transmitted,0)=0 AND id>=@maxId; ", conn))
+           // string serverPathTxt = AppDomain.CurrentDomain.BaseDirectory + "App_Data\\TransmissionEvents.csv";
+            string serverPathTxt = AppDomain.CurrentDomain.BaseDirectory + "App_Data\\Transmissions.csv";
+            string hourBegin = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(serverPathTxt, true))
             {
-                cmd.Parameters.AddWithValue("@maxId", maxId);
-                cmd.ExecuteNonQuery();
+                file.WriteLine(hourBegin+ "-------------------------"+message);
             }
         }
 
 
-        static void Main(string[] args)
-        {
-            string dataHora = DateTime.Now.ToString("yyyy -MM-dd HH:mm");
 
+
+        static void MainOld(string[] args)
+        {
+            SetTimer();
+            aTimer.Stop();
+            aTimer.Dispose();
             // obtendo os dados iniciais de config            
             string serverPathXML = AppDomain.CurrentDomain.BaseDirectory + "App_Data\\UserConfig.xml";
             string userXML = getXMLFileString(serverPathXML);
@@ -313,29 +324,43 @@ namespace SODB_NEW
             SqlConnection localConn = new SqlConnection(localCon);
             localConn.Open();
 
-            DataView dv = getSumsForTheHourOneLinePerCamera(localConn);
+        LoopX:
+            string dateToTransmit = getDateToTransmit(localConn, lastTransmission);
+            if (dateToTransmit == "")
+            {
+                //sem dados no banco a partir da hora em last transmission
+                logMessage("nao obteve dados no banco após ultima transmissão em:" + lastTransmission);
+                return; // o programa sera chamado de 10 em 10 minutos pelo gerenciador de tarefas
+            }
+            // enviar hora a hora até falhar a transmissao ou terminar os dados
+            DataView dv = getSumsForTheHourOneLinePerCamera(localConn, dateToTransmit);
             if (dv == null)
             {
                 //sem dados no banco a partir da hora em last transmission
-                logMessage("Nenhum dado obtido  em :" + dataHora);
+                logMessage("Erro na obtenção dos dados em :" + dateToTransmit);
                 return;
             }
-            int maxId = 0;
-            string trStr = getXMLForTheHourOneLinePerCameraPerHour(dv, docConfig, ref maxId);
-            
+            string trStr = getXMLForTheHourOneLinePerCamera(dateToTransmit, dv, docConfig);
+
+
             int statusTr = sendTransmission(uri, username, pw, client, location, trStr);
             if (statusTr == (int)server_status.off)
             {
-                logMessage("Erro de Transmissão :" + dataHora);
+                logMessage("Erro de Transmissão :" + dateToTransmit);
                 return;
             }
-            else {
-                markTransmittedRecords(localConn, maxId);
-            }
+
 
             logTransmissions(trStr);
 
+            attrs["date"].Value = dateToTransmit;
+            docConfig.Save(serverPathXML);
+            lastTransmission = dateToTransmit;
+            goto LoopX;
         }
+
+
+
 
     }
 }

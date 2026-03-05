@@ -2,16 +2,40 @@
 <!--
   arquivo que contem as configurações deste servidor para o sincronismo
 -->
+
 <configuration>
-  <connectionStrings>
-	<connectionString  name= "LocalConnection" providerName="System.Data.SqlClient"
-         connectionString="Data Source=CONTAGEMDEFLUXO;Initial Catalog=contafluxo;Integrated Security=SSPI;" />
-	</connectionStrings>
-  <user name="3rsynch" pass="net3rcorp" />
-  <client name="3rcorp" />
-  <location name="teste" />
-  <remoteServer uri="http://localhost:3117/ReportToClient.ashx" />
-  <lastDateTransmitted date="1000-01-01 00:00:00" />
-  <user name="SYNCHDATA" pass="net3rcorp" />
-  <cameras_list></cameras_list>
+<connectionStrings>
+<connectionString name="LocalConnection" providerName="System.Data.SqlClient" connectionString="Data Source=DESKTOP-MOMTD7M\SQLEXPRESS;Initial Catalog=contafluxo;Integrated Security=SSPI;Max Pool Size=250;Connection Timeout=300;Pooling=false"/>
+</connectionStrings>
+<user name="jaraguateste@3rcorp.com.br" pass="net3rcorp"/>
+<client name="TesteJaragua"/>
+<location name="Jaragua do Sul"/>
+<remoteServer uri="http://localhost:63034/ReportToClient.ashx"/>
+<remoteServerOld uri="https://nodehub.azurewebsites.net/ReportToClient.ashx"/>
+<lastDateTransmitted date="2024-07-01 10:01:59"/>
+<operationHours timezone_diff="0" counting_hour_sunday="10" counting_hour_sunday_qtd="12" counting_hour_monday="10" counting_hour_monday_qtd="12" counting_hour_tuesday="10" counting_hour_tuesday_qtd="12" counting_hour_wednesday="10" counting_hour_wednesday_qtd="12" counting_hour_thursday="10" counting_hour_thursday_qtd="12" counting_hour_friday="10" counting_hour_friday_qtd="12" counting_hour_saturday="10" counting_hour_saturday_qtd="12" counting_hour_holiday="10" counting_hour_holiday_qtd="12"/>
+-
+<holidays_list>
+<holiday year="0000" month="01" day="01"/>
+<holiday year="0000" month="04" day="21"/>
+<holiday year="0000" month="05" day="01"/>
+<holiday year="0000" month="11" day="15"/>
+<holiday year="0000" month="12" day="25"/>
+</holidays_list>
+-
+<cameras_list>
+<door door="Porta Automatica G3" entrance="1" old_shop_name="TesteJaragua" old_channel="3" old_door_name="Porta Automatica G3" old_computer_name="DESKTOP-MOMTD7M"/>
+<door door="Hall Elev G6" entrance="1" old_shop_name="TesteJaragua" old_channel="6" old_door_name="Hall Elev G6" old_computer_name="DESKTOP-MOMTD7M"/>
+<door door="Hall Elev G5" entrance="1" old_shop_name="TesteJaragua" old_channel="7" old_door_name="Hall Elev G5" old_computer_name="DESKTOP-MOMTD7M"/>
+<door door="Sub Solo" entrance="1" old_shop_name="TesteJaragua" old_channel="9" old_door_name="Sub Solo" old_computer_name="DESKTOP-MOMTD7M"/>
+<door door="Entrada Farmacia" entrance="1" old_shop_name="TesteJaragua" old_channel="10" old_door_name="Entrada Farmacia" old_computer_name="DESKTOP-MOMTD7M"/>
+<door door="Hall Elev G4" entrance="1" old_shop_name="TesteJaragua" old_channel="11" old_door_name="Hall Elev G4" old_computer_name="DESKTOP-MOMTD7M"/>
+<door door="Hall Elevador G3 Direita" entrance="1" old_shop_name="TesteJaragua" old_channel="5" old_door_name="Hall Elevador G3 Direita" old_computer_name="DESKTOP-MOMTD7M"/>
+<door door="Hall Elev G7" entrance="1" old_shop_name="TesteJaragua" old_channel="8" old_door_name="Hall Elev G7" old_computer_name="DESKTOP-MOMTD7M"/>
+<door door="Lado Esquerdo Getulio" entrance="1" old_shop_name="TesteJaragua" old_channel="2" old_door_name="Lado Esquerdo Getulio" old_computer_name="DESKTOP-MOMTD7M"/>
+<door door="Porta Central Getulio" entrance="1" old_shop_name="TesteJaragua" old_channel="1" old_door_name="Porta Central Getulio" old_computer_name="DESKTOP-MOMTD7M"/>
+<door door="Hall Elevador G3 Esquerda" entrance="1" old_shop_name="TesteJaragua" old_channel="4" old_door_name="Hall Elevador G3 Esquerda" old_computer_name="DESKTOP-MOMTD7M"/>
+<door door="Lado Direito Getulio" entrance="1" old_shop_name="TesteJaragua" old_channel="0" old_door_name="Lado Direito Getulio" old_computer_name="DESKTOP-MOMTD7M"/>
+<door door="Porta Riachuelo" entrance="1" old_shop_name="TesteJaragua" old_channel="12" old_door_name="Porta Riachuelo" old_computer_name="DESKTOP-MOMTD7M"/>
+</cameras_list>
 </configuration>
